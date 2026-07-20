@@ -48,6 +48,16 @@ const GhostCursor = ({
   const pointerActiveRef = useRef(false);
   const runningRef = useRef(false);
   const hasValidSizeRef = useRef(false);
+  const isVisibleRef = useRef(false);
+
+  useEffect(() => {
+    if (!containerRef.current) return;
+    const observer = new IntersectionObserver(([entry]) => {
+      isVisibleRef.current = entry.isIntersecting;
+    }, { threshold: 0 });
+    observer.observe(containerRef.current);
+    return () => observer.disconnect();
+  }, []);
 
   const isTouch = useMemo(
     () => typeof window !== 'undefined' && ('ontouchstart' in window || navigator.maxTouchPoints > 0),
@@ -345,7 +355,7 @@ const GhostCursor = ({
     const animate = () => {
       if (!active) return;
 
-      if (!hasValidSizeRef.current) {
+      if (!hasValidSizeRef.current || !isVisibleRef.current) {
         rafRef.current = requestAnimationFrame(animate);
         return;
       }

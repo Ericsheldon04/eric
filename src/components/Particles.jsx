@@ -101,6 +101,17 @@ const Particles = ({
 }) => {
   const containerRef = useRef(null);
   const mouseRef = useRef({ x: 0, y: 0 });
+  const isVisibleRef = useRef(false);
+
+  useEffect(() => {
+    const container = containerRef.current;
+    if (!container) return;
+    const observer = new IntersectionObserver(([entry]) => {
+      isVisibleRef.current = entry.isIntersecting;
+    }, { threshold: 0 });
+    observer.observe(container);
+    return () => observer.disconnect();
+  }, []);
 
   useEffect(() => {
     const container = containerRef.current;
@@ -187,6 +198,10 @@ const Particles = ({
 
     const update = (t) => {
       animationFrameId = requestAnimationFrame(update);
+      if (!isVisibleRef.current) {
+         lastTime = t;
+         return;
+      }
       const delta = t - lastTime;
       lastTime = t;
       elapsed += delta * speed;

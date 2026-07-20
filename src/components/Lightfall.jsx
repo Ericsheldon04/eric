@@ -196,6 +196,17 @@ const Lightfall = ({
   const rendererRef = useRef(null);
   const mouseTargetRef = useRef([0, 0]);
   const lastTimeRef = useRef(0);
+  const isVisibleRef = useRef(false);
+
+  useEffect(() => {
+    const container = containerRef.current;
+    if (!container) return;
+    const observer = new IntersectionObserver(([entry]) => {
+      isVisibleRef.current = entry.isIntersecting;
+    }, { threshold: 0 });
+    observer.observe(container);
+    return () => observer.disconnect();
+  }, []);
 
   useEffect(() => {
     const container = containerRef.current;
@@ -281,6 +292,10 @@ const Lightfall = ({
 
     const loop = (t) => {
       rafRef.current = requestAnimationFrame(loop);
+      if (!isVisibleRef.current) {
+        lastTimeRef.current = t;
+        return;
+      }
       uniforms.iTime.value = t * 0.001;
       if (mouseDampening > 0) {
         if (!lastTimeRef.current) lastTimeRef.current = t;
