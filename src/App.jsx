@@ -1,19 +1,21 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, lazy, Suspense } from 'react';
 import Lenis from '@studio-freight/lenis';
 import { ArrowUpRight, Award, Crown, X, Mail, Phone, ExternalLink } from 'lucide-react';
 import GlassCard from './components/GlassCard';
-import LogoLoop from './components/LogoLoop';
 import TargetCursor from './components/TargetCursor';
 import GhostCursor from './components/GhostCursor';
-import ProfileCard from './components/ProfileCard';
-import Lightfall from './components/Lightfall';
-import LightPillar from './components/LightPillar';
-import SideRays from './components/SideRays';
-import Particles from './components/Particles';
-import HoverReveal from './components/HoverReveal';
+
+const LogoLoop = lazy(() => import('./components/LogoLoop'));
+const ProfileCard = lazy(() => import('./components/ProfileCard'));
+const Lightfall = lazy(() => import('./components/Lightfall'));
+const LightPillar = lazy(() => import('./components/LightPillar'));
+const SideRays = lazy(() => import('./components/SideRays'));
+const Particles = lazy(() => import('./components/Particles'));
+const HoverReveal = lazy(() => import('./components/HoverReveal'));
 import meImage from './assets/me.jpeg';
 import ironmanImage from './assets/ironman.png';
 import me2Image from './assets/me2.png';
+import heroVideo from './assets/Video Project 1.mp4';
 import { SiReact, SiFlutter, SiNodedotjs, SiPostgresql, SiThreedotjs, SiGreensock, SiTailwindcss, SiGit } from 'react-icons/si';
 
 const techLogos = [
@@ -87,7 +89,7 @@ export default function App() {
           loop
           playsInline
           className="absolute inset-0 w-full h-full object-cover z-0"
-          src="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260606_154941_df1a96e1-a06f-450c-bd02-d863414cc1a0.mp4"
+          src={heroVideo}
         />
 
         {/* Overlay to ensure text readability */}
@@ -273,11 +275,13 @@ export default function App() {
 
             {/* Right Side: Full Photo */}
             <div className="w-full lg:w-5/12 flex justify-center lg:justify-end items-center relative z-10">
-              <HoverReveal 
-                baseImage={ironmanImage}
-                revealImage={me2Image}
-                className="w-full aspect-[3/4] max-w-[400px] xl:max-w-[450px] rounded-2xl border border-white/10 transition-colors duration-500 shadow-[0_0_30px_rgba(220,38,38,0.15)] hover:border-primary/50 hover:shadow-[0_0_50px_rgba(220,38,38,0.5)]"
-              />
+              <Suspense fallback={<div className="w-full aspect-[3/4] max-w-[400px] xl:max-w-[450px] rounded-2xl border border-white/10 bg-white/5 animate-pulse"></div>}>
+                <HoverReveal 
+                  baseImage={ironmanImage}
+                  revealImage={me2Image}
+                  className="w-full aspect-[3/4] max-w-[400px] xl:max-w-[450px] rounded-2xl border border-white/10 transition-colors duration-500 shadow-[0_0_30px_rgba(220,38,38,0.15)] hover:border-primary/50 hover:shadow-[0_0_50px_rgba(220,38,38,0.5)]"
+                />
+              </Suspense>
             </div>
 
           </div>
@@ -286,20 +290,22 @@ export default function App() {
         {/* PROJECTS SECTION */}
         <div className="relative overflow-hidden w-full bg-black">
           <div className="absolute inset-0 z-0 opacity-40">
-            <LightPillar
-              topColor="#dc2626"
-              bottomColor="#7f1d1d"
-              intensity={0.7}
-              rotationSpeed={0.2}
-              glowAmount={0.005}
-              pillarWidth={1.5}
-              pillarHeight={0.3}
-              noiseIntensity={0.6}
-              pillarRotation={25}
-              interactive={true}
-              mixBlendMode="screen"
-              quality="high"
-            />
+            <Suspense fallback={null}>
+              <LightPillar
+                topColor="#dc2626"
+                bottomColor="#7f1d1d"
+                intensity={0.7}
+                rotationSpeed={0.2}
+                glowAmount={0.005}
+                pillarWidth={1.5}
+                pillarHeight={0.3}
+                noiseIntensity={0.6}
+                pillarRotation={25}
+                interactive={true}
+                mixBlendMode="screen"
+                quality="high"
+              />
+            </Suspense>
           </div>
           <Section title="Projects" id="projects" className="relative z-10 bg-transparent">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
@@ -395,59 +401,65 @@ export default function App() {
         {/* SKILLS / TECH STACK SECTION */}
         <div className="relative overflow-hidden w-full bg-[#0a0000]">
           <div className="absolute inset-0 z-0">
-            <SideRays
-              speed={2.5}
-              rayColor1="#ff3333"
-              rayColor2="#ffb3b3"
-              intensity={2}
-              spread={2}
-              origin="top-right"
-              tilt={0}
-              saturation={1.5}
-              blend={0.75}
-              falloff={1.6}
-              opacity={1}
-            />
+            <Suspense fallback={null}>
+              <SideRays
+                speed={2.5}
+                rayColor1="#ff3333"
+                rayColor2="#ffb3b3"
+                intensity={2}
+                spread={2}
+                origin="top-right"
+                tilt={0}
+                saturation={1.5}
+                blend={0.75}
+                falloff={1.6}
+                opacity={1}
+              />
+            </Suspense>
           </div>
           <Section title="Tech Stack" id="skills" className="relative z-10 bg-transparent">
           <div className="flex flex-col lg:flex-row gap-10 lg:gap-16 items-center justify-between w-full mx-auto mt-8 mb-16">
             
             {/* Profile Card (Left side) */}
             <div className="w-full lg:w-5/12 flex justify-center">
-              <ProfileCard
-                name="Eric Sheldon"
-                title="Full Stack Developer & Partner"
-                handle="ericsheldon"
-                status="Online"
-                contactText="Contact Me"
-                avatarUrl={meImage}
-                showUserInfo={true}
-                enableTilt={true}
-                enableMobileTilt={false}
-                onContactClick={() => {
-                  document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' });
-                }}
-                behindGlowEnabled={true}
-                behindGlowColor="#dc2626"
-                innerGradient="linear-gradient(to bottom, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0) 25%, rgba(0,0,0,0) 75%, rgba(0,0,0,0.9) 100%)"
-              />
+              <Suspense fallback={<div className="w-64 h-80 rounded-2xl bg-white/5 animate-pulse"></div>}>
+                <ProfileCard
+                  name="Eric Sheldon"
+                  title="Full Stack Developer & Partner"
+                  handle="ericsheldon"
+                  status="Online"
+                  contactText="Contact Me"
+                  avatarUrl={meImage}
+                  showUserInfo={true}
+                  enableTilt={true}
+                  enableMobileTilt={false}
+                  onContactClick={() => {
+                    document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' });
+                  }}
+                  behindGlowEnabled={true}
+                  behindGlowColor="#dc2626"
+                  innerGradient="linear-gradient(to bottom, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0) 25%, rgba(0,0,0,0) 75%, rgba(0,0,0,0.9) 100%)"
+                />
+              </Suspense>
             </div>
 
             {/* Tech Stack Logos (Right side) */}
             <div className="w-full lg:w-7/12 flex flex-col gap-8 relative overflow-hidden">
                 <div className="relative overflow-hidden w-full" style={{ height: '160px' }}>
-                  <LogoLoop
-                    logos={techLogos}
-                    speed={100}
-                    direction="left"
-                    logoHeight={64}
-                    gap={100}
-                    hoverSpeed={20}
-                    scaleOnHover
-                    fadeOut
-                    fadeOutColor="#0a0202"
-                    ariaLabel="Technology Stack"
-                  />
+                  <Suspense fallback={<div className="w-full h-full flex items-center justify-center space-x-4"><div className="w-16 h-16 bg-white/5 rounded-full animate-pulse"></div><div className="w-16 h-16 bg-white/5 rounded-full animate-pulse"></div><div className="w-16 h-16 bg-white/5 rounded-full animate-pulse"></div></div>}>
+                    <LogoLoop
+                      logos={techLogos}
+                      speed={100}
+                      direction="left"
+                      logoHeight={64}
+                      gap={100}
+                      hoverSpeed={20}
+                      scaleOnHover
+                      fadeOut
+                      fadeOutColor="#0a0202"
+                      ariaLabel="Technology Stack"
+                    />
+                  </Suspense>
                 </div>
             </div>
 
@@ -458,23 +470,25 @@ export default function App() {
         {/* EXPERIENCE SECTION */}
         <div className="relative overflow-hidden w-full bg-[#0a0000]">
           <div className="absolute inset-0 z-0">
-            <Lightfall
-              colors={['#ffb3b3', '#990000', '#ff6666']}
-              backgroundColor="#2a0000"
-              speed={0.5}
-              streakCount={2}
-              streakWidth={1}
-              streakLength={1}
-              glow={1}
-              density={0.6}
-              twinkle={1}
-              zoom={3}
-              backgroundGlow={0.5}
-              opacity={1}
-              mouseInteraction={true}
-              mouseStrength={0.5}
-              mouseRadius={1}
-            />
+            <Suspense fallback={null}>
+              <Lightfall
+                colors={['#ffb3b3', '#990000', '#ff6666']}
+                backgroundColor="#2a0000"
+                speed={0.5}
+                streakCount={2}
+                streakWidth={1}
+                streakLength={1}
+                glow={1}
+                density={0.6}
+                twinkle={1}
+                zoom={3}
+                backgroundGlow={0.5}
+                opacity={1}
+                mouseInteraction={true}
+                mouseStrength={0.5}
+                mouseRadius={1}
+              />
+            </Suspense>
           </div>
           <Section title="Current Venture" id="venture" className="relative z-10 bg-transparent">
           <GlassCard className="max-w-4xl mx-auto flex flex-col md:flex-row items-center gap-6 md:gap-8 p-6 md:p-10 relative z-10 backdrop-blur-xl bg-black/40 border border-white/10 shadow-[0_0_40px_rgba(220,38,38,0.15)] transition-all duration-500 hover:shadow-[0_0_60px_rgba(220,38,38,0.3)] hover:border-primary/30">
@@ -497,19 +511,21 @@ export default function App() {
       {/* CONTACT SECTION */}
         <div className="relative overflow-hidden w-full bg-[#0a0000]">
           <div className="absolute inset-0 z-0">
-            <Particles
-              particleCount={200}
-              particleSpread={10}
-              speed={0.1}
-              particleColors={['#ff3333', '#ffb3b3', '#ffffff']}
-              moveParticlesOnHover={true}
-              particleHoverFactor={1}
-              alphaParticles={true}
-              particleBaseSize={100}
-              sizeRandomness={1}
-              cameraDistance={20}
-              disableRotation={false}
-            />
+            <Suspense fallback={null}>
+              <Particles
+                particleCount={200}
+                particleSpread={10}
+                speed={0.1}
+                particleColors={['#ff3333', '#ffb3b3', '#ffffff']}
+                moveParticlesOnHover={true}
+                particleHoverFactor={1}
+                alphaParticles={true}
+                particleBaseSize={100}
+                sizeRandomness={1}
+                cameraDistance={20}
+                disableRotation={false}
+              />
+            </Suspense>
           </div>
           <Section title="Contact" id="contact" className="relative z-10 bg-transparent">
           <div className="max-w-2xl mx-auto w-full relative rounded-2xl overflow-hidden border border-white/10 group cursor-target">
