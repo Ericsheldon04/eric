@@ -2,9 +2,8 @@ import React, { useState, useEffect, lazy, Suspense } from 'react';
 import Lenis from '@studio-freight/lenis';
 import { ArrowUpRight, Award, Crown, X, Mail, Phone, ExternalLink } from 'lucide-react';
 import GlassCard from './components/GlassCard';
-import TargetCursor from './components/TargetCursor';
-import GhostCursor from './components/GhostCursor';
-
+const TargetCursor = lazy(() => import('./components/TargetCursor'));
+const GhostCursor = lazy(() => import('./components/GhostCursor'));
 const LogoLoop = lazy(() => import('./components/LogoLoop'));
 const ProfileCard = lazy(() => import('./components/ProfileCard'));
 const Lightfall = lazy(() => import('./components/Lightfall'));
@@ -69,28 +68,45 @@ export default function App() {
     };
   }, []);
 
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const checkMobile = () => setIsMobile(window.innerWidth < 768);
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
+
   const navLinks = ["About", "Projects", "Skills", "Venture", "Contact"];
 
   return (
     <div className="bg-black text-white min-h-screen selection:bg-primary/30">
-      <TargetCursor 
-        targetSelector="a, button, .glass, .cursor-target" 
-        cursorColor="#ffffff"
-        cursorColorOnTarget="#dc2626"
-        spinDuration={3}
-      />
+      {!isMobile && (
+        <Suspense fallback={null}>
+          <TargetCursor 
+            targetSelector="a, button, .glass, .cursor-target" 
+            cursorColor="#ffffff"
+            cursorColorOnTarget="#dc2626"
+            spinDuration={3}
+          />
+        </Suspense>
+      )}
       
       {/* ----------------- HERO SECTION ----------------- */}
       <header className="relative w-full h-screen overflow-hidden">
-        {/* Background Video */}
-        <video
-          autoPlay
-          muted
-          loop
-          playsInline
-          className="absolute inset-0 w-full h-full object-cover z-0"
-          src={heroVideo}
-        />
+        {/* Background Video (Desktop Only) */}
+        {!isMobile ? (
+          <video
+            autoPlay
+            muted
+            loop
+            playsInline
+            className="absolute inset-0 w-full h-full object-cover z-0"
+            src={heroVideo}
+          />
+        ) : (
+          <div className="absolute inset-0 w-full h-full object-cover z-0 bg-gradient-to-b from-[#1a0000] to-black"></div>
+        )}
 
         {/* Overlay to ensure text readability */}
         <div className="absolute inset-0 bg-black/40 z-10"></div>
