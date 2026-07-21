@@ -99,7 +99,7 @@ export default function App() {
         <div className="absolute top-0 left-0 right-0 z-30">
           <nav className="w-full flex items-center justify-between px-6 sm:px-10 lg:px-16 py-5 lg:py-7">
             <div className="font-podium text-2xl sm:text-3xl font-bold uppercase tracking-wider">
-              ERIC SHELDON
+              ERIC SHELDON RS
             </div>
 
             {/* Desktop Links */}
@@ -145,7 +145,7 @@ export default function App() {
         >
           <div className="w-full flex items-center justify-between px-6 sm:px-10 py-5">
             <div className="font-podium text-2xl sm:text-3xl font-bold uppercase tracking-wider">
-              ERIC SHELDON
+              ERIC SHELDON RS
             </div>
             <button
               onClick={() => setMenuOpen(false)}
@@ -267,7 +267,7 @@ export default function App() {
                   </p>
                   
                   <p className="text-gray-400 text-base md:text-lg font-inter leading-relaxed mt-6">
-                    Whether it is architecting powerful backends, designing intuitive frontends, or leading development teams to success, my mission is to push the boundaries of what is possible on the web and deliver unparalleled value to clients worldwide.
+                    Beyond code, I am a natural leader who thrives in any environment. I served as the Leo Club President for the 2024-2025 tenure and was honored as the first President of the CESETA Association at MRK College. No matter the platform or challenge, I step up, take charge, and deliver excellence with my leadership skills.
                   </p>
                 </div>
               </GlassCard>
