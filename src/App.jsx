@@ -68,7 +68,9 @@ export default function App() {
     };
   }, []);
 
-  const [isMobile, setIsMobile] = useState(false);
+  const [isMobile, setIsMobile] = useState(
+    typeof window !== 'undefined' ? window.innerWidth < 768 : false
+  );
 
   useEffect(() => {
     const checkMobile = () => setIsMobile(window.innerWidth < 768);
@@ -306,22 +308,24 @@ export default function App() {
         {/* PROJECTS SECTION */}
         <div className="relative overflow-hidden w-full bg-black">
           <div className="absolute inset-0 z-0 opacity-40">
-            <Suspense fallback={null}>
-              <LightPillar
-                topColor="#dc2626"
-                bottomColor="#7f1d1d"
-                intensity={0.7}
-                rotationSpeed={0.2}
-                glowAmount={0.005}
-                pillarWidth={1.5}
-                pillarHeight={0.3}
-                noiseIntensity={0.6}
-                pillarRotation={25}
-                interactive={true}
-                mixBlendMode="screen"
-                quality="high"
-              />
-            </Suspense>
+            {!isMobile && (
+              <Suspense fallback={null}>
+                <LightPillar
+                  topColor="#dc2626"
+                  bottomColor="#7f1d1d"
+                  intensity={0.7}
+                  rotationSpeed={0.2}
+                  glowAmount={0.005}
+                  pillarWidth={1.5}
+                  pillarHeight={0.3}
+                  noiseIntensity={0.6}
+                  pillarRotation={25}
+                  interactive={true}
+                  mixBlendMode="screen"
+                  quality="high"
+                />
+              </Suspense>
+            )}
           </div>
           <Section title="Projects" id="projects" className="relative z-10 bg-transparent">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
@@ -417,21 +421,23 @@ export default function App() {
         {/* SKILLS / TECH STACK SECTION */}
         <div className="relative overflow-hidden w-full bg-[#0a0000]">
           <div className="absolute inset-0 z-0">
-            <Suspense fallback={null}>
-              <SideRays
-                speed={2.5}
-                rayColor1="#ff3333"
-                rayColor2="#ffb3b3"
-                intensity={2}
-                spread={2}
-                origin="top-right"
-                tilt={0}
-                saturation={1.5}
-                blend={0.75}
-                falloff={1.6}
-                opacity={1}
-              />
-            </Suspense>
+            {!isMobile && (
+              <Suspense fallback={null}>
+                <SideRays
+                  speed={2.5}
+                  rayColor1="#ff3333"
+                  rayColor2="#ffb3b3"
+                  intensity={2}
+                  spread={2}
+                  origin="top-right"
+                  tilt={0}
+                  saturation={1.5}
+                  blend={0.75}
+                  falloff={1.6}
+                  opacity={1}
+                />
+              </Suspense>
+            )}
           </div>
           <Section title="Tech Stack" id="skills" className="relative z-10 bg-transparent">
           <div className="flex flex-col lg:flex-row gap-10 lg:gap-16 items-center justify-between w-full mx-auto mt-8 mb-16">
@@ -486,25 +492,27 @@ export default function App() {
         {/* EXPERIENCE SECTION */}
         <div className="relative overflow-hidden w-full bg-[#0a0000]">
           <div className="absolute inset-0 z-0">
-            <Suspense fallback={null}>
-              <Lightfall
-                colors={['#ffb3b3', '#990000', '#ff6666']}
-                backgroundColor="#2a0000"
-                speed={0.5}
-                streakCount={2}
-                streakWidth={1}
-                streakLength={1}
-                glow={1}
-                density={0.6}
-                twinkle={1}
-                zoom={3}
-                backgroundGlow={0.5}
-                opacity={1}
-                mouseInteraction={true}
-                mouseStrength={0.5}
-                mouseRadius={1}
-              />
-            </Suspense>
+            {!isMobile && (
+              <Suspense fallback={null}>
+                <Lightfall
+                  colors={['#ffb3b3', '#990000', '#ff6666']}
+                  backgroundColor="#2a0000"
+                  speed={0.5}
+                  streakCount={2}
+                  streakWidth={1}
+                  streakLength={1}
+                  glow={1}
+                  density={0.6}
+                  twinkle={1}
+                  zoom={3}
+                  backgroundGlow={0.5}
+                  opacity={1}
+                  mouseInteraction={true}
+                  mouseStrength={0.5}
+                  mouseRadius={1}
+                />
+              </Suspense>
+            )}
           </div>
           <Section title="Current Venture" id="venture" className="relative z-10 bg-transparent">
           <GlassCard className="max-w-4xl mx-auto flex flex-col md:flex-row items-center gap-6 md:gap-8 p-6 md:p-10 relative z-10 backdrop-blur-xl bg-black/40 border border-white/10 shadow-[0_0_40px_rgba(220,38,38,0.15)] transition-all duration-500 hover:shadow-[0_0_60px_rgba(220,38,38,0.3)] hover:border-primary/30">
@@ -527,21 +535,23 @@ export default function App() {
       {/* CONTACT SECTION */}
         <div className="relative overflow-hidden w-full bg-[#0a0000]">
           <div className="absolute inset-0 z-0">
-            <Suspense fallback={null}>
-              <Particles
-                particleCount={200}
-                particleSpread={10}
-                speed={0.1}
-                particleColors={['#ff3333', '#ffb3b3', '#ffffff']}
-                moveParticlesOnHover={true}
-                particleHoverFactor={1}
-                alphaParticles={true}
-                particleBaseSize={100}
-                sizeRandomness={1}
-                cameraDistance={20}
-                disableRotation={false}
-              />
-            </Suspense>
+            {!isMobile && (
+              <Suspense fallback={null}>
+                <Particles
+                  particleCount={200}
+                  particleSpread={10}
+                  speed={0.1}
+                  particleColors={['#ff3333', '#ffb3b3', '#ffffff']}
+                  moveParticlesOnHover={true}
+                  particleHoverFactor={1}
+                  alphaParticles={true}
+                  particleBaseSize={100}
+                  sizeRandomness={1}
+                  cameraDistance={20}
+                  disableRotation={false}
+                />
+              </Suspense>
+            )}
           </div>
           <Section title="Contact" id="contact" className="relative z-10 bg-transparent">
           <div className="max-w-2xl mx-auto w-full relative rounded-2xl overflow-hidden border border-white/10 group cursor-target">
@@ -549,7 +559,11 @@ export default function App() {
             <div className="absolute inset-0 glass z-0"></div>
             
             {/* Ghost Cursor */}
-            <GhostCursor color="#dc2626" className="absolute inset-0 w-full h-full z-0" />
+            {!isMobile && (
+              <Suspense fallback={null}>
+                <GhostCursor color="#dc2626" className="absolute inset-0 w-full h-full z-0" />
+              </Suspense>
+            )}
             
             {/* Content */}
             <div className="relative z-10 flex flex-col items-center justify-center space-y-6 md:space-y-8 p-6 md:p-12 text-center w-full">
